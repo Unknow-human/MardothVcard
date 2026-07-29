@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mardoth LAWANI — Carte de Visite Numérique & Badge NFC</title>
+<meta name="description" content="Badge d'identité virtuel 3D & Carte de visite numérique de Mardoth LAWANI Adjokè Morayo — Technicienne en Agrobusiness, Spécialiste Agriculture Biologique & Entrepreneure.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+:root {
+  --bg-dark: #071811;
+  --bg-card: rgba(14, 36, 26, 0.72);
+  --bg-glass: rgba(17, 41, 30, 0.55);
+  --border-line: rgba(126, 217, 87, 0.16);
+  --border-glow: rgba(126, 217, 87, 0.45);
+
+  --leaf: #7ed957;
+  --leaf-glow: rgba(126, 217, 87, 0.32);
+  --moss: #2f8f5b;
+  --gold: #e0a458;
+  --gold-glow: rgba(224, 164, 88, 0.35);
+  --clay: #c97a4a;
+
+  --text-main: #f3f6ee;
+  --text-muted: #a9b9a8;
+  --text-dim: #6f7f6c;
+
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 8px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-image:
+    radial-gradient(circle at 15% 12%, rgba(126, 217, 87, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 85% 65%, rgba(224, 164, 88, 0.07) 0%, transparent 45%),
+    linear-gradient(rgba(126, 217, 87, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(126, 217, 87, 0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ---------- TOPBAR ---------- */
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(7, 24, 17, 0.85);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border-line);
+}
+.topbar-inner {
+  max-width: 680px; margin: 0 auto; padding: 12px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.brand-badge { display: flex; align-items: center; gap: 10px; }
+.brand-logo-icon {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--leaf), var(--moss));
+  border-radius: 9px; display: flex; align-items: center; justify-content: center;
+  color: #052110; box-shadow: 0 0 14px var(--leaf-glow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.brand-logo-icon:hover { transform: scale(1.08) rotate(4deg); box-shadow: 0 0 22px rgba(126, 217, 87, 0.6); }
+.brand-text { font-family: var(--font-mono); font-size: 13px; font-weight: 700; letter-spacing: 0.08em; color: var(--text-main); }
+.brand-text span { color: var(--leaf); }
+.topbar-actions { display: flex; align-items: center; gap: 10px; }
+.btn-mini-save {
+  background: linear-gradient(135deg, var(--leaf), var(--moss));
+  color: #052110; font-family: var(--font-body); font-size: 12px; font-weight: 700;
+  padding: 8px 16px; border-radius: 100px; display: inline-flex; align-items: center; gap: 6px;
+  cursor: pointer; border: none; transition: all 0.25s ease; box-shadow: 0 0 15px rgba(126, 217, 87, 0.3);
+}
+.btn-mini-save:hover { transform: translateY(-2px); box-shadow: 0 0 22px rgba(126, 217, 87, 0.5); }
+
+/* ---------- MAIN CONTAINER ---------- */
+.wrap { max-width: 680px; margin: 0 auto; padding: 0 20px; }
+
+/* ---------- HERO & 3D BADGE STAGE ---------- */
+.hero { padding: 30px 0 20px; display: flex; flex-direction: column; align-items: center; }
+.status-pill {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--gold); background: rgba(224, 164, 88, 0.1); border: 1px solid rgba(224, 164, 88, 0.3);
+  padding: 5px 14px; border-radius: 100px; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 24px;
+}
+.status-pill .pulse-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--gold);
+  box-shadow: 0 0 10px var(--gold); animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(224, 164, 88, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(224, 164, 88, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(224, 164, 88, 0); }
+}
+
+.badge-stage { perspective: 1200px; width: 100%; max-width: 380px; margin: 0 auto 30px; position: relative; }
+
+.badge-holder-clip {
+  width: 60px; height: 24px; background: linear-gradient(180deg, #3c5a44, #16281c);
+  border-radius: 6px 6px 0 0; margin: 0 auto; position: relative; z-index: 10;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.15); border-bottom: none;
+}
+.badge-holder-clip::after {
+  content: ''; position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
+  width: 24px; height: 8px; background: #081209; border-radius: 4px;
+}
+
+.card-3d-wrapper {
+  width: 100%; height: 540px; position: relative; transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer;
+}
+.card-3d-wrapper.flipped { transform: rotateY(180deg); }
+
+.card-face {
+  position: absolute; width: 100%; height: 100%; border-radius: 22px;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden; overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(126, 217, 87, 0.15), inset 0 0 15px rgba(255, 255, 255, 0.05);
+}
+
+.card-front {
+  background: linear-gradient(155deg, rgba(16, 40, 27, 0.95) 0%, rgba(6, 18, 12, 0.98) 100%);
+  display: flex; flex-direction: column; padding: 24px; justify-content: space-between;
+}
+
+.card-face::before {
+  content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+  background: linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, 0.05) 30%,
+    rgba(126, 217, 87, 0.12) 45%, rgba(224, 164, 88, 0.12) 55%, transparent 70%);
+  transform: rotate(30deg); pointer-events: none; transition: opacity 0.3s; opacity: 0.7;
+}
+
+.card-top-row {
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 14px;
+}
+.card-org-logo {
+  display: flex; align-items: center; gap: 8px; font-family: var(--font-mono);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: var(--leaf);
+}
+.rfid-chip-icon {
+  width: 38px; height: 28px; background: linear-gradient(135deg, #f2cd7a, #b8860b);
+  border-radius: 6px; position: relative; overflow: hidden;
+  border: 1px solid rgba(255, 215, 0, 0.6); box-shadow: inset 0 0 4px rgba(0,0,0,0.4);
+}
+.rfid-chip-icon::before { content: ''; position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background: rgba(0,0,0,0.5); }
+.rfid-chip-icon::after { content: ''; position: absolute; left: 50%; top: 0; width: 1px; height: 100%; background: rgba(0,0,0,0.5); }
+
+.card-avatar-section { display: flex; flex-direction: column; align-items: center; margin: 10px 0; position: relative; }
+.photo-frame {
+  width: 120px; height: 120px; border-radius: 20px; padding: 4px;
+  background: linear-gradient(135deg, var(--leaf), var(--gold));
+  box-shadow: 0 0 25px rgba(126, 217, 87, 0.25); position: relative; cursor: pointer; transition: transform 0.3s ease;
+}
+.photo-frame:hover { transform: scale(1.04); }
+.photo-frame img { width: 100%; height: 100%; border-radius: 16px; object-fit: cover; background: var(--bg-dark); }
+
+.card-identity { text-align: center; margin-top: 10px; }
+.card-name { font-family: var(--font-display); font-size: 23px; font-weight: 700; color: var(--text-main); letter-spacing: -0.01em; line-height: 1.15; }
+.card-title { font-size: 12px; color: var(--leaf); font-family: var(--font-mono); margin-top: 4px; font-weight: 600; }
+.card-sub-title { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+.card-meta-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px; padding: 10px; margin-top: 12px;
+}
+.meta-item { text-align: center; }
+.meta-label { font-family: var(--font-mono); font-size: 9px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; }
+.meta-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-main); font-weight: 600; margin-top: 2px; }
+
+.card-footer-row {
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1); padding-top: 10px; margin-top: 6px;
+}
+.nfc-indicator { display: flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10px; color: var(--gold); }
+.flip-prompt-btn {
+  font-family: var(--font-mono); font-size: 10px; color: var(--leaf);
+  background: rgba(126, 217, 87, 0.1); border: 1px solid rgba(126, 217, 87, 0.3);
+  padding: 4px 10px; border-radius: 100px; display: flex; align-items: center; gap: 5px;
+}
+
+.card-back {
+  background: linear-gradient(155deg, rgba(6, 18, 12, 0.98) 0%, rgba(16, 40, 27, 0.95) 100%);
+  transform: rotateY(180deg); display: flex; flex-direction: column; justify-content: space-between; padding: 24px;
+}
+.mag-stripe {
+  height: 42px; background: #000000; margin: -24px -24px 15px -24px;
+  border-bottom: 1px solid rgba(255,255,255,0.1); position: relative;
+}
+.mag-stripe::after {
+  content: ''; position: absolute; top: 12px; left: 0; width: 100%; height: 18px;
+  background: linear-gradient(90deg, #16281c 25%, #2a4632 50%, #16281c 75%); opacity: 0.7;
+}
+.back-content-center { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; }
+.qr-wrapper { background: #ffffff; padding: 10px; border-radius: 14px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); }
+.qr-wrapper img { width: 110px; height: 110px; display: block; }
+.barcode-strip {
+  width: 100%; height: 36px;
+  background: repeating-linear-gradient(90deg, #fff, #fff 2px, #000 2px, #000 5px, #fff 5px, #fff 8px, #000 8px, #000 9px);
+  border-radius: 4px; margin-top: 8px;
+}
+.back-info-text { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); }
+
+.hero-title {
+  font-family: var(--font-display); font-size: clamp(2rem, 8vw, 3rem); font-weight: 700;
+  text-align: center; line-height: 1.08; margin-bottom: 10px; letter-spacing: -0.01em;
+}
+.hero-subtitle { text-align: center; font-size: 0.95rem; color: var(--text-muted); max-width: 480px; margin-bottom: 24px; }
+
+.spec-stats-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); width: 100%;
+  background: var(--bg-card); border: 1px solid var(--border-line); border-radius: var(--radius-md);
+  overflow: hidden; margin-bottom: 24px; backdrop-filter: blur(10px);
+}
+.spec-stat-item { padding: 14px 10px; text-align: center; border-right: 1px solid var(--border-line); }
+.spec-stat-item:last-child { border-right: none; }
+.spec-stat-item .num { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--leaf); display: block; line-height: 1; }
+.spec-stat-item .lbl { font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; display: block; }
+
+.cta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 18px;
+  border-radius: var(--radius-md); font-family: var(--font-body); font-weight: 600; font-size: 0.92rem;
+  border: 1px solid var(--border-line); cursor: pointer; transition: all 0.2s ease;
+  background: var(--bg-card); color: var(--text-main); backdrop-filter: blur(10px);
+}
+.btn:active { transform: scale(0.98); }
+.btn-primary {
+  grid-column: 1 / -1; background: linear-gradient(135deg, var(--leaf), var(--moss));
+  color: #052110; border-color: var(--leaf); font-size: 1rem; font-weight: 700; box-shadow: 0 4px 20px var(--leaf-glow);
+}
+.btn-primary:hover { box-shadow: 0 6px 28px rgba(126, 217, 87, 0.5); transform: translateY(-2px); }
+.btn-ghost:hover { background: rgba(126, 217, 87, 0.1); border-color: var(--leaf); color: var(--leaf); }
+
+/* ---------- SECTIONS TIMELINE / RAIL ---------- */
+main { padding: 20px 0 60px; }
+.rail { position: relative; margin-left: 6px; padding-left: 28px; border-left: 1px dashed var(--border-glow); }
+section.block { position: relative; padding: 36px 0 10px; }
+.node {
+  position: absolute; left: -34px; top: 40px; width: 11px; height: 11px; border-radius: 50%;
+  background: var(--bg-dark); border: 2px solid var(--leaf); box-shadow: 0 0 10px var(--leaf);
+}
+.sec-head { margin-bottom: 20px; }
+.sec-head .tag { font-family: var(--font-mono); font-size: 11px; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 4px; }
+.sec-head h2 { font-family: var(--font-display); font-weight: 700; font-size: 1.6rem; color: var(--text-main); letter-spacing: -0.01em; }
+.sec-head p.lead { color: var(--text-muted); font-size: 0.9rem; margin-top: 6px; }
+
+.card-grid { display: grid; gap: 14px; }
+.mod-card {
+  background: var(--bg-card); border: 1px solid var(--border-line); border-radius: var(--radius-md);
+  padding: 20px; backdrop-filter: blur(10px); transition: all 0.25s ease;
+}
+.mod-card:hover { border-color: var(--border-glow); transform: translateY(-2px); }
+.mod-card .mod-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.mod-card .mod-id { font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); letter-spacing: 0.08em; }
+.mod-card h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; color: var(--text-main); }
+.mod-card p { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 12px; }
+.tag-list { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag-list span {
+  font-family: var(--font-mono); font-size: 11px; color: var(--leaf);
+  background: rgba(126, 217, 87, 0.08); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(126, 217, 87, 0.2);
+}
+.mod-card.featured {
+  border: 1px solid var(--gold);
+  background: linear-gradient(180deg, rgba(224, 164, 88, 0.12) 0%, var(--bg-card) 100%);
+  box-shadow: 0 0 20px rgba(224, 164, 88, 0.1);
+}
+.mod-card.featured .mod-id { color: var(--gold); }
+.mod-card.featured .tag-list span { color: var(--gold); background: rgba(224, 164, 88, 0.1); border-color: rgba(224, 164, 88, 0.3); }
+.badge-new { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; background: var(--gold); color: #21140a; padding: 3px 10px; border-radius: 100px; font-weight: 700; }
+
+.proj-card {
+  background: var(--bg-card); border: 1px solid var(--border-line); border-radius: var(--radius-md);
+  padding: 16px 18px; margin-bottom: 12px; transition: border-color 0.2s;
+}
+.proj-card:hover { border-color: var(--leaf); }
+.proj-card .proj-top { display: flex; gap: 10px; align-items: center; margin-bottom: 6px; }
+.proj-card .proj-num { font-family: var(--font-mono); color: var(--gold); font-size: 12px; font-weight: 700; }
+.proj-card h4 { font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: var(--text-main); }
+.proj-card p { color: var(--text-muted); font-size: 0.86rem; }
+
+.proj-more-list { list-style: none; margin-top: 10px; }
+.proj-more-list li {
+  font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); padding: 10px 0;
+  border-bottom: 1px dashed var(--border-line); display: flex; gap: 10px;
+}
+.proj-more-list li span.n { color: var(--leaf); font-weight: 700; }
+
+.toggle-btn {
+  margin-top: 14px; width: 100%; text-align: center; padding: 12px; border-radius: var(--radius-sm);
+  border: 1px dashed var(--border-glow); font-family: var(--font-mono); font-size: 12px; color: var(--leaf);
+  background: rgba(126, 217, 87, 0.05); cursor: pointer; transition: all 0.2s;
+}
+.toggle-btn:hover { background: rgba(126, 217, 87, 0.12); }
+#more-projects { display: none; }
+#more-projects.open { display: block; }
+
+.tl-item { display: flex; gap: 14px; margin-bottom: 18px; }
+.tl-item .tl-year { font-family: var(--font-mono); font-size: 12px; color: var(--gold); min-width: 85px; font-weight: 700; padding-top: 2px; }
+.tl-item .tl-body h4 { font-weight: 700; font-size: 0.95rem; color: var(--text-main); margin-bottom: 2px; }
+.tl-item .tl-body p { color: var(--text-muted); font-size: 0.85rem; }
+
+.lang-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.lang-row {
+  display: flex; align-items: center; justify-content: space-between; background: var(--bg-card);
+  border: 1px solid var(--border-line); border-radius: var(--radius-sm); padding: 12px 16px;
+}
+.lang-row .lname { font-weight: 600; font-size: 0.9rem; }
+.lang-row .llevel {
+  font-family: var(--font-mono); font-size: 11px; color: var(--leaf);
+  background: rgba(126, 217, 87, 0.08); border: 1px solid rgba(126, 217, 87, 0.25); padding: 3px 10px; border-radius: 100px;
+}
+
+.contact-panel { background: var(--bg-card); border: 1px solid var(--border-line); border-radius: var(--radius-md); padding: 20px; }
+.contact-row { display: flex; align-items: center; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--border-line); }
+.contact-row:last-child { border-bottom: none; }
+.contact-row .ic {
+  width: 40px; height: 40px; border-radius: 10px; background: rgba(126, 217, 87, 0.1);
+  display: flex; align-items: center; justify-content: center; color: var(--leaf); font-size: 16px; flex-shrink: 0;
+}
+.contact-row .txt small { display: block; font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; }
+.contact-row .txt span { font-size: 0.95rem; color: var(--text-main); font-weight: 500; }
+
+.modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px); z-index: 200; display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+}
+.modal-overlay.active { opacity: 1; pointer-events: auto; }
+.modal-content {
+  background: var(--bg-dark); border: 1px solid var(--leaf); border-radius: var(--radius-lg);
+  padding: 30px; max-width: 340px; width: 90%; text-align: center; position: relative; box-shadow: 0 0 40px var(--leaf-glow);
+}
+.modal-close-btn { position: absolute; top: 14px; right: 14px; background: transparent; border: none; color: var(--text-muted); font-size: 18px; cursor: pointer; }
+.modal-qr-img { width: 200px; height: 200px; margin: 15px auto; border-radius: 12px; background: white; padding: 10px; }
+
+#toast {
+  position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px);
+  background: linear-gradient(135deg, var(--leaf), var(--moss)); color: #052110;
+  font-family: var(--font-mono); font-size: 12px; font-weight: 700; padding: 12px 22px; border-radius: 100px;
+  opacity: 0; pointer-events: none; transition: all 0.3s ease; z-index: 300; box-shadow: 0 0 20px var(--leaf-glow); white-space: nowrap;
+}
+#toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+footer { padding: 40px 0 60px; text-align: center; border-top: 1px solid var(--border-line); margin-top: 40px; }
+footer p { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); margin: 4px 0; }
+
+@media (min-width: 480px) {
+  .cta-grid { grid-template-columns: 1fr 1fr 1fr; }
+  .btn-primary { grid-column: 1 / -1; }
+}
+</style>
+</head>
+<body>
+
+<div id="toast"><i class="fa-solid fa-check-circle"></i> Contact vCard généré & téléchargé !</div>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand-badge">
+      <div class="brand-logo-icon" title="Badge NFC Pro — Mardoth LAWANI">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2C9 6 6 9 6 13a6 6 0 0 0 12 0c0-4-3-7-6-11z"/>
+          <path d="M12 13v9"/>
+        </svg>
+      </div>
+      <div class="brand-text">MARDOTH <span>LAWANI</span></div>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn-mini-save" onclick="downloadVCard()">
+        <i class="fa-solid fa-user-plus"></i> Enregistrer
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section class="hero">
+
+    <div class="status-pill">
+      <span class="pulse-dot"></span> DISPONIBLE POUR COLLABORATIONS & COMMANDES
+    </div>
+
+    <div class="badge-stage">
+      <div class="badge-holder-clip"></div>
+
+      <div class="card-3d-wrapper" id="card3D" onclick="flipCard()">
+
+        <div class="card-face card-front">
+          <div class="card-top-row">
+            <div class="card-org-logo">
+              <i class="fa-solid fa-seedling"></i> Carte de visite
+            </div>
+            <div class="rfid-chip-icon" title="RFID / NFC Embedded Chip"></div>
+          </div>
+
+          <div class="card-avatar-section">
+            <div class="photo-frame">
+              <img id="profileImage" src="photo.jpg" alt="Mardoth LAWANI Profile Photo">
+            </div>
+          </div>
+
+          <div class="card-identity">
+            <div class="card-name">Mardoth LAWANI</div>
+            <div class="card-title">Technicienne en Agrobusiness</div>
+            <div class="card-sub-title">Agriculture Biologique & Entrepreneure</div>
+          </div>
+
+          <div class="card-meta-grid">
+            <div class="meta-item">
+              <div class="meta-label">ID BADGE</div>
+              <div class="meta-value">ML-2026-AGRI</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">BASE</div>
+              <div class="meta-value">ABOMEY-CALAVI</div>
+            </div>
+          </div>
+
+          <div class="card-footer-row">
+            <div class="nfc-indicator">
+              <i class="fa-solid fa-wifi"></i> BADGE RFID ACTIF
+            </div>
+            <div class="flip-prompt-btn">
+              <i class="fa-solid fa-rotate"></i> Tourner
+            </div>
+          </div>
+        </div>
+
+        <div class="card-face card-back">
+          <div class="mag-stripe"></div>
+
+          <div class="back-content-center">
+            <div class="qr-wrapper" onclick="openQRModal(event)">
+              <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://wa.me/2290156364637" alt="QR Code vCard">
+            </div>
+            <div class="back-info-text">Scannez pour obtenir le profil instantané</div>
+            <div class="barcode-strip"></div>
+          </div>
+
+          <div class="card-footer-row">
+            <div class="nfc-indicator">
+              <i class="fa-solid fa-shield-halved"></i> SECURE ENCRYPTED
+            </div>
+            <div class="flip-prompt-btn">
+              <i class="fa-solid fa-rotate"></i> Recto
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <h1 class="hero-title">Cultiver la Qualité, Récolter la Confiance</h1>
+    <p class="hero-subtitle">Technicienne Supérieure en Agrobusiness et Politique Agricole, spécialisée en Marketing des intrants et des produits agricoles — également entrepreneure passionnée par la valorisation des produits locaux.</p>
+
+    <div class="spec-stats-grid">
+      <div class="spec-stat-item">
+        <span class="num">2</span>
+        <span class="lbl">Entreprises Fondées</span>
+      </div>
+      <div class="spec-stat-item">
+        <span class="num">3+</span>
+        <span class="lbl">Ans de Terrain</span>
+      </div>
+      <div class="spec-stat-item">
+        <span class="num">3</span>
+        <span class="lbl">Langues Parlées</span>
+      </div>
+    </div>
+
+    <div class="cta-grid">
+      <button class="btn btn-primary" onclick="downloadVCard()">
+        <i class="fa-solid fa-address-card"></i> Enregistrer Mon Contact
+      </button>
+      <a class="btn btn-ghost" href="tel:+2290156364637">
+        <i class="fa-solid fa-phone"></i> Appeler
+      </a>
+      <a class="btn btn-ghost" href="https://wa.me/2290156364637" target="_blank" rel="noopener">
+        <i class="fa-brands fa-whatsapp"></i> WhatsApp
+      </a>
+    </div>
+
+  </section>
+
+  <main>
+    <div class="rail">
+
+      <!-- ABOUT -->
+      <section class="block" id="about">
+        <span class="node"></span>
+        <div class="sec-head">
+          <span class="tag">01 — PROFIL PROFESSIONNEL</span>
+          <h2>À Propos de Moi</h2>
+        </div>
+        <div class="mod-card">
+          <p style="margin-bottom:10px;">Je me présente, <strong>Mardoth LAWANI Adjokè Morayo</strong>, titulaire d'une <strong>Licence Professionnelle en Agrobusiness et Politique Agricole</strong>, avec une spécialisation en <strong>Marketing des intrants et des produits agricoles</strong>.</p>
+          <p style="margin-bottom:10px;">J'occupe actuellement le poste de collaboratrice au sein d'<strong>Africa Bio Expertise (ABE)</strong>, un cabinet de conseil situé à Abomey-Calavi, spécialisé dans la promotion de pratiques agricoles biologiques, écologiques et équitables.</p>
+          <p>Passionnée par l'agrobusiness, l'entrepreneuriat et la valorisation des produits locaux, je m'investis chaque jour dans le développement de projets innovants alliant qualité, professionnalisme et satisfaction de la clientèle.</p>
+        </div>
+      </section>
+
+      <!-- SKILLS -->
+      <section class="block" id="skills">
+        <span class="node"></span>
+        <div class="sec-head">
+          <span class="tag">02 — DOMAINES D'EXPERTISE</span>
+          <h2>Compétences & Modules</h2>
+          <p class="lead">Du terrain agricole à l'entrepreneuriat, une double expertise complémentaire.</p>
+        </div>
+
+        <div class="card-grid">
+
+          <div class="mod-card">
+            <div class="mod-top">
+              <span class="mod-id">MODULE 01 · TERRAIN</span>
+            </div>
+            <h3>Agriculture Biologique & Certification</h3>
+            <p>Accompagnement des producteurs, entreprises et coopératives vers les standards internationaux.</p>
+            <div class="tag-list">
+              <span>Agriculture Biologique</span><span>Audit Interne</span><span>HACCP</span><span>Certification</span>
+            </div>
+          </div>
+
+          <div class="mod-card">
+            <div class="mod-top">
+              <span class="mod-id">MODULE 02 · DONNÉES</span>
+            </div>
+            <h3>Enquête & Collecte de Données</h3>
+            <p>Collecte, saisie et analyse de données agricoles, avec ou sans smartphone.</p>
+            <div class="tag-list">
+              <span>KoboCollect</span><span>KoboToolbox</span><span>Excel</span><span>SPSS</span><span>STATA</span>
+            </div>
+          </div>
+
+          <div class="mod-card featured">
+            <div class="mod-top">
+              <span class="mod-id">MODULE 03 · ENTREPRENEURIAT</span>
+              <span class="badge-new">DOUBLE CASQUETTE</span>
+            </div>
+            <h3>Fondatrice & Cheffe d'Entreprise</h3>
+            <p>Créatrice de Djokè Shop (boutique multi-produits) et Les Croquettes de Djokè (traiteur événementiel).</p>
+            <div class="tag-list">
+              <span>Commerce</span><span>Vente au Détail</span><span>Traiteur Événementiel</span><span>Satisfaction Client</span>
+            </div>
+          </div>
+
+          <div class="mod-card">
+            <div class="mod-top">
+              <span class="mod-id">MODULE 04 · TERRAIN</span>
+            </div>
+            <h3>Animation & Suivi-Évaluation</h3>
+            <p>Formation, vulgarisation agricole et accompagnement des organisations paysannes.</p>
+            <div class="tag-list">
+              <span>Animation</span><span>Suivi-Évaluation</span><span>Vie Associative</span><span>Vulgarisation</span>
+            </div>
+          </div>
+
+          <div class="mod-card">
+            <div class="mod-top">
+              <span class="mod-id">MODULE 05 · SOFT SKILLS</span>
+            </div>
+            <h3>Qualités Professionnelles</h3>
+            <p>Autonome, organisée, rigoureuse, méthodique et pragmatique.</p>
+            <div class="tag-list">
+              <span>Travail en Équipe</span><span>Milieu Interculturel</span><span>Sens de l'Écoute</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ENTREPRISES -->
+      <section class="block" id="entreprises">
+        <span class="node"></span>
+        <div class="sec-head">
+          <span class="tag">03 — MES ENTREPRISES</span>
+          <h2>Projets Entrepreneuriaux</h2>
+          <p class="lead">Deux marques nées de la passion pour le commerce et la valorisation locale.</p>
+        </div>
+
+        <div class="proj-card">
+          <div class="proj-top">
+            <span class="proj-num">01</span>
+            <h4>Djokè Shop</h4>
+          </div>
+          <p>Boutique proposant une large gamme de produits : vêtements, articles du quotidien et produits alimentaires.</p>
+        </div>
+
+        <div class="proj-card">
+          <div class="proj-top">
+            <span class="proj-num">02</span>
+            <h4>Les Croquettes de Djokè</h4>
+          </div>
+          <p>Préparation et fourniture d'amuse-bouches pour anniversaires, mariages, cérémonies et autres réceptions.</p>
+        </div>
+
+      </section>
+
+      <!-- EXPERIENCE -->
+      <section class="block" id="experience">
+        <span class="node"></span>
+        <div class="sec-head">
+          <span class="tag">04 — PARCOURS PROFESSIONNEL</span>
+          <h2>Expériences de Terrain</h2>
+        </div>
+
+        <div class="proj-card">
+          <div class="proj-top">
+            <span class="proj-num">•</span>
+            <h4>ABE — Africa Bio Expertise (Aout 2025 — Aujourd'hui)</h4>
+          </div>
+          <p>Accompagnement des producteurs vers la certification bio, formations KoboCollect, collecte et analyse de données, HACCP.</p>
+        </div>
+
+        <div class="proj-card">
+          <div class="proj-top">
+            <span class="proj-num">•</span>
+            <h4>FENAPAB — Fédération Nationale des Producteurs d'Anacarde (Mai à Juillet 2025)</h4>
+          </div>
+          <p>Agente enquêtrice au niveau de chaque secteur de l'anacarde, appui aux formations de production et d'entretien.</p>
+        </div>
+
+        <div class="proj-card">
+          <div class="proj-top">
+            <span class="proj-num">•</span>
+            <h4>APS — Agro Production Sènan (Février et Mars 2025)</h4>
+          </div>
+          <p>Notions de maraîchage, élevage des poussins, appui aux animateurs et à la vie associative coopérative.</p>
+        </div>
+
+        <div class="proj-card">
+          <div class="proj-top">
+            <span class="proj-num">•</span>
+            <h4>ASCABE-SARL (Aout 2023 et Aout 2024)</h4>
+          </div>
+          <p>Formations en agriculture biologique et contrôle interne, suivi d'audit, achats et commercialisation du soja.</p>
+        </div>
+
+        <div id="more-projects">
+          <ul class="proj-more-list">
+            <li><span class="n">•</span> Stage académique — Coopérative Belle Tomate, AGOUAGON, Glazoué (Juillet 2023)</li>
+            <li><span class="n">•</span> Stage académique — AfricaAgro, Woroko (Juillet 2024) — Production végétale</li>
+          </ul>
+        </div>
+
+        <button class="toggle-btn" onclick="toggleProjects(this)">
+          <i class="fa-solid fa-plus"></i> Voir les stages académiques
+        </button>
+      </section>
+
+      <!-- FORMATION -->
+      <section class="block" id="education">
+        <span class="node"></span>
+        <div class="sec-head">
+          <span class="tag">05 — FORMATION & LANGUES</span>
+          <h2>Éducation & Langues</h2>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-year">2024–2025</div>
+          <div class="tl-body">
+            <h4>Licence Professionnelle en Agrobusiness et Politique Agricole</h4>
+            <p>Université Nationale d'Agriculture, Porto-Novo (Bénin)</p>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-year">2021–2022</div>
+          <div class="tl-body">
+            <h4>Baccalauréat D</h4>
+            <p>Collège d'Enseignement Général de Danto, Porto-Novo (Bénin) — Mathématiques, Physique et SVT</p>
+          </div>
+        </div>
+
+        <div class="lang-grid" style="margin-top:20px;">
+          <div class="lang-row"><span class="lname">Yoruba, Fon, Nago</span><span class="llevel">Langues maternelles</span></div>
+          <div class="lang-row"><span class="lname">Français</span><span class="llevel">C2 · Expérimenté</span></div>
+          <div class="lang-row"><span class="lname">Anglais</span><span class="llevel">B1 · Indépendant</span></div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section class="block" id="contact">
+        <span class="node"></span>
+        <div class="sec-head">
+          <span class="tag">06 — CONTACT DIRECT</span>
+          <h2>Me Contacter</h2>
+        </div>
+
+        <div class="contact-panel">
+
+          <a class="contact-row" href="tel:+2290156364637">
+            <div class="ic"><i class="fa-solid fa-phone"></i></div>
+            <div class="txt">
+              <small>Téléphone / Mobile</small>
+              <span>+229 01 56 36 46 37</span>
+            </div>
+          </a>
+
+          <a class="contact-row" href="tel:+2290143541867">
+            <div class="ic"><i class="fa-solid fa-phone-volume"></i></div>
+            <div class="txt">
+              <small>Téléphone Fixe</small>
+              <span>+229 01 43 54 18 67</span>
+            </div>
+          </a>
+
+          <a class="contact-row" href="https://wa.me/2290156364637" target="_blank" rel="noopener">
+            <div class="ic"><i class="fa-brands fa-whatsapp"></i></div>
+            <div class="txt">
+              <small>WhatsApp</small>
+              <span>Discuter sur WhatsApp</span>
+            </div>
+          </a>
+
+          <a class="contact-row" href="mailto:mardothlawani6@gmail.com">
+            <div class="ic"><i class="fa-solid fa-envelope"></i></div>
+            <div class="txt">
+              <small>E-mail</small>
+              <span>mardothlawani6@gmail.com</span>
+            </div>
+          </a>
+
+          <div class="contact-row">
+            <div class="ic"><i class="fa-solid fa-location-dot"></i></div>
+            <div class="txt">
+              <small>Localisation</small>
+              <span>Abomey-Calavi, Bénin</span>
+            </div>
+          </div>
+
+          <div class="contact-row" style="cursor:pointer;" onclick="downloadVCard()">
+            <div class="ic"><i class="fa-solid fa-address-card"></i></div>
+            <div class="txt">
+              <small>Fichier vCard</small>
+              <span>Télécharger le fichier .vcf</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 Mardoth LAWANI Adjokè Morayo — Tous droits réservés.</p>
+    <p>Carte Virtuelle & Badge RFID/NFC — Agrobusiness Edition</p>
+  </footer>
+
+</div>
+
+<div class="modal-overlay" id="qrModal" onclick="closeQRModal()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <button class="modal-close-btn" onclick="closeQRModal()"><i class="fa-solid fa-xmark"></i></button>
+    <h3 style="font-family: var(--font-display); color: var(--text-main);">Flash & Contact</h3>
+    <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Scannez ce QR Code avec un smartphone pour ouvrir directement la discussion WhatsApp.</p>
+    <div class="modal-qr-img">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://wa.me/2290156364637" alt="QR Code Large" style="width:100%; height:100%;">
+    </div>
+    <button class="btn btn-primary" onclick="closeQRModal()" style="width:100%;">Fermer</button>
+  </div>
+</div>
+
+<script>
+const cardWrapper = document.getElementById('card3D');
+
+function flipCard() {
+  cardWrapper.classList.toggle('flipped');
+}
+
+const stage = document.querySelector('.badge-stage');
+
+stage.addEventListener('mousemove', (e) => {
+  if (cardWrapper.classList.contains('flipped')) return;
+  const rect = stage.getBoundingClientRect();
+  const x = e.clientX - rect.left - (rect.width / 2);
+  const y = e.clientY - rect.top - (rect.height / 2);
+  const rotateX = (-y / rect.height) * 22;
+  const rotateY = (x / rect.width) * 22;
+  cardWrapper.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+});
+
+stage.addEventListener('mouseleave', () => {
+  if (!cardWrapper.classList.contains('flipped')) {
+    cardWrapper.style.transform = 'rotateX(0deg) rotateY(0deg)';
+  }
+});
+
+function downloadVCard() {
+  const vcardData = `BEGIN:VCARD
+VERSION:3.0
+N:LAWANI;Mardoth;Adjokè;;
+FN:Mardoth LAWANI Adjokè Morayo
+TITLE:Technicienne Supérieure en Agrobusiness & Entrepreneure
+ORG:Africa Bio Expertise (ABE)
+TEL;TYPE=CELL,VOICE:+2290156364637
+TEL;TYPE=HOME,VOICE:+2290143541867
+EMAIL:mardothlawani6@gmail.com
+ADR;TYPE=HOME:;;Abomey-Calavi;;;;Bénin
+NOTE:Spécialiste Agrobusiness, Agriculture Biologique & Entrepreneure (Djokè Shop, Les Croquettes de Djokè)
+URL:https://wa.me/2290156364637
+END:VCARD`;
+
+  const blob = new Blob([vcardData], { type: 'text/vcard;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.setAttribute('download', 'Mardoth_LAWANI_Contact.vcf');
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
+  showToast('Fichier vCard (.vcf) téléchargé !');
+}
+
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  toast.innerHTML = `<i class="fa-solid fa-check-circle"></i> ${message}`;
+  toast.classList.add('show');
+  setTimeout(() => { toast.classList.remove('show'); }, 3500);
+}
+
+function toggleProjects(btn) {
+  const moreBox = document.getElementById('more-projects');
+  if (moreBox.classList.contains('open')) {
+    moreBox.classList.remove('open');
+    btn.innerHTML = '<i class="fa-solid fa-plus"></i> Voir les stages académiques';
+  } else {
+    moreBox.classList.add('open');
+    btn.innerHTML = '<i class="fa-solid fa-minus"></i> Réduire la liste';
+  }
+}
+
+function openQRModal(event) {
+  event.stopPropagation();
+  document.getElementById('qrModal').classList.add('active');
+}
+
+function closeQRModal() {
+  document.getElementById('qrModal').classList.remove('active');
+}
+</script>
+
+</body>
+</html>
